@@ -1,22 +1,36 @@
 import {Console} from "./Console";
+import APIService from "./services/Service";
 
 const console: Console = new Console();
+const api: APIService = new APIService();
 
 console.setOptions({
-    "1": function(): void {
-        /** @todo C'est pour toi Vic :p */
+    "1": async function() {
+        const colleagues = await api.fetchCollegues();
+
+        if (colleagues === undefined) {
+            console.error("Invalid response received.");
+
+            return;
+        }
+
+        console.trace(colleagues.join("\n"));
     },
-    "2": function(): void {
+    "2": async function() {
         console.trace("Bye");
         console.exit();
     },
 });
 
-while (console.isActive()) {
-    console.trace("--- Colleague Administration ---\n\n");
-    console.trace("1. List colleagues\n");
-    console.trace("2. Exit\n");
-    console.trace("\n> ");
-
-    console.listen();
+async function main() {
+    while (console.isActive()) {
+        console.trace("--- Colleague Administration ---\n\n");
+        console.trace("1. List colleagues\n");
+        console.trace("2. Exit\n");
+        console.trace("\n> ");
+    
+        await console.listen();
+    }
 }
+
+main();

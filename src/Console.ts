@@ -58,13 +58,15 @@ export class Console implements ConsoleInterface {
         this.print(`\x1b[93m${message}\x1b[39m`);
     }
 
-    listen(): void {
+    async listen() {
         const input = question();
         const option: Function|null = this.options[input] ?? null;
 
         if (option === null) {
             this.error(`Invalid option '${input}'.\n`);
-        } else option();
+        } else {
+            await option();
+        }
 
         this.trace("\n");
     }
