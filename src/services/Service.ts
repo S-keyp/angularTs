@@ -33,7 +33,20 @@ export default class Service {
         }
     }
 
-
+    async createCollegue(collegue: Collegue) {
+        axios.post(this.baseRoute, {
+            pseudo: collegue.pseudo,
+            last: collegue.last,
+            first: collegue.first,
+            photo: collegue.photo
+        })
+        .then(function (response) {
+            console.log('Success adding user');
+        })
+        .catch(function (error) {
+            console.log('error: ', error);
+        });
+    }
 
 
 }
