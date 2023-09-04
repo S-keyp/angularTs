@@ -1,5 +1,5 @@
 import axios from "axios";
-import Collegue from "../models/Collegue";
+import Colleague from "../models/Colleague";
 
 export default class Service {
     baseRoute: string
@@ -14,7 +14,7 @@ export default class Service {
         this.baseRoute = "https://app-6f6e9c23-7f63-4d86-975b-a0b1a1440f94.cleverapps.io/api/v2/colleagues"
     }
 
-    async fetchCollegues(...args: undefined[] | string[]): Promise<Collegue[] | undefined> {
+    async fetchCollegues(...args: undefined[] | string[]): Promise<Colleague[] | undefined> {
         let tempRoute = this.baseRoute
 
         if(args.length > 0){
@@ -33,14 +33,14 @@ export default class Service {
         }
     }
 
-    async createCollegue(collegue: Collegue) {
+    async createCollegue(colleague: Colleague) {
 
         axios.post(this.baseRoute, {
 
-            pseudo: collegue.pseudo,
-            last: collegue.last,
-            first: collegue.first,
-            photo: collegue.photo
+            pseudo: colleague.getNickname(),
+            last: colleague.getLastName(),
+            first: colleague.getFirstName(),
+            photo: colleague.getImageUrl()
 
         })
         .then(function (response) {
@@ -51,7 +51,7 @@ export default class Service {
         .catch(function (error) {
 
             return error;
-            
+
         });
     }
 
