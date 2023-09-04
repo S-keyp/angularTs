@@ -1,4 +1,4 @@
-import {Console} from "./Console";
+import Console from "./Console";
 import APIService from "./services/Service";
 
 const console: Console = new Console();
@@ -14,7 +14,9 @@ console.setOptions({
             return;
         }
 
-        console.trace(colleagues.join("\n"));
+        for (const colleague of colleagues) {
+            console.trace(`- ${colleague}\n`);
+        }
     },
     "2": async function() {
         console.trace("Bye");

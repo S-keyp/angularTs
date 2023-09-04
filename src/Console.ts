@@ -15,14 +15,13 @@ interface ConsoleInterface {
     exit(): void;
 }
 
-export class Console implements ConsoleInterface {
+export default class Console implements ConsoleInterface {
     private active: boolean;
     private options: ConsoleOptions;
 
     constructor() {
         this.active = true;
         this.options = {};
-
         this.clear();
     }
 

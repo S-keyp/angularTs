@@ -1,5 +1,5 @@
 import axios from "axios";
-import Collegue from "../models/Collegue";
+import Colleague from "../models/Colleague";
 
 export default class Service {
     baseRoute: string
@@ -14,7 +14,7 @@ export default class Service {
         this.baseRoute = "https://app-6f6e9c23-7f63-4d86-975b-a0b1a1440f94.cleverapps.io/api/v2/colleagues"
     }
 
-    async fetchCollegues(...args: undefined[] | string[]): Promise<Collegue[] | undefined> {
+    async fetchCollegues(...args: undefined[] | string[]): Promise<Colleague[] | undefined> {
         let tempRoute = this.baseRoute
 
         if(args.length > 0){
@@ -24,7 +24,8 @@ export default class Service {
         try {
 
             const response = await axios.get(tempRoute);
-            return response.data;
+            console.log(JSON.stringify(response.data))
+            return response.data.map((json: {first: string, last: string, pseudo: string, photo: string}) => new Colleague(json));
 
         } catch (error) {
 
@@ -33,12 +34,12 @@ export default class Service {
         }
     }
 
-    async createCollegue(collegue: Collegue) {
+    async createCollegue(collegue: Colleague) {
         axios.post(this.baseRoute, {
-            pseudo: collegue.pseudo,
-            last: collegue.last,
-            first: collegue.first,
-            photo: collegue.photo
+            pseudo: collegue.getNickname(),
+            last: collegue.getLastName(),
+            first: collegue.getFirstName(),
+            photo: collegue.getImageUrl(),
         })
         .then(function (response) {
             console.log('Success adding user');

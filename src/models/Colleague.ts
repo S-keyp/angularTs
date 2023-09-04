@@ -4,11 +4,11 @@ export default class Colleague {
     private nickname: string;
     private imageUrl: string;
 
-    constructor(firstName: string, lastName: string, nickname: string, imageUrl: string) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.nickname = nickname;
-        this.imageUrl = imageUrl;
+    constructor(json: {first: string, last: string, pseudo: string, photo: string}) {
+        this.firstName = json.first;
+        this.lastName = json.last;
+        this.nickname = json.pseudo;
+        this.imageUrl = json.photo;
     }
 
     getFirstName(): string {
@@ -41,5 +41,13 @@ export default class Colleague {
 
     setImageUrl(imageUrl: string): void {
         this.imageUrl = imageUrl;
+    }
+
+    toString(): string {
+        if (this.firstName === undefined && this.lastName === undefined) {
+            return this.nickname;
+        }
+
+        return `${this.firstName} ${this.lastName} (alias ${this.nickname})`;
     }
 }
