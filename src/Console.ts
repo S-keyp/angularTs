@@ -47,7 +47,7 @@ export class Console implements ConsoleInterface {
     }
 
     error(message: string): void {
-        this.print(`\x1b[93m${message}\x1b[39m`);
+        this.print(`\x1b[91m${message}\x1b[39m`);
     }
 
     trace(message: string): void {
@@ -63,7 +63,7 @@ export class Console implements ConsoleInterface {
         const option: Function|null = this.options[input] ?? null;
 
         if (option === null) {
-            this.warn(`Invalid option '${input}'.\n`);
+            this.error(`Invalid option '${input}'.\n`);
         } else option();
 
         this.trace("\n");
